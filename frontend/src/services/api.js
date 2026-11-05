@@ -1,5 +1,4 @@
-const API_BASE_URL = '/api';
-
+const API_BASE_URL = 'https://vds-backend-mr7v.onrender.com/api';
 /**
  * Generic request helper with automatic Authorization header
  */
