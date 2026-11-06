@@ -1,4 +1,6 @@
-const API_BASE_URL = 'https://vds-backend-mr7v.onrender.com/api';
+
+const API_BASE_URL = 'https://vds-ekip.onrender.com/api';
+
 /**
  * Generic request helper with automatic Authorization header
  */
@@ -22,7 +24,9 @@ const request = async (endpoint, options = {}) => {
   }));
 
   if (!response.ok) {
-    throw new Error(data.message || 'Request failed with status ' + response.status);
+    throw new Error(
+      data.message || 'Request failed with status ' + response.status
+    );
   }
 
   return data;
@@ -99,8 +103,11 @@ export const createProductCategory = async (categoryData) => {
 
 export const getShops = async (params = {}) => {
   const queryString = new URLSearchParams(
-    Object.entries(params).filter(([_, v]) => v !== undefined && v !== '')
+    Object.entries(params).filter(
+      ([_, v]) => v !== undefined && v !== ''
+    )
   ).toString();
+
   return request(`/shops${queryString ? `?${queryString}` : ''}`);
 };
 
@@ -138,8 +145,11 @@ export const deleteShop = async (id) => {
 
 export const getProducts = async (params = {}) => {
   const queryString = new URLSearchParams(
-    Object.entries(params).filter(([_, v]) => v !== undefined && v !== '')
+    Object.entries(params).filter(
+      ([_, v]) => v !== undefined && v !== ''
+    )
   ).toString();
+
   return request(`/products${queryString ? `?${queryString}` : ''}`);
 };
 
@@ -191,30 +201,19 @@ export const addAddress = async (addressData) => {
 // ==========================================
 
 export const createOrder = async (orderData) => {
-  const token = localStorage.getItem('vdsToken');
-
-  const response = await fetch(`${API_BASE_URL}/orders`, {
+  return request('/orders', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
     body: JSON.stringify(orderData),
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || 'Failed to place order');
-  }
-
-  return data;
 };
 
 export const getOrders = async (params = {}) => {
   const queryString = new URLSearchParams(
-    Object.entries(params).filter(([_, v]) => v !== undefined && v !== '')
+    Object.entries(params).filter(
+      ([_, v]) => v !== undefined && v !== ''
+    )
   ).toString();
+
   return request(`/orders${queryString ? `?${queryString}` : ''}`);
 };
 
